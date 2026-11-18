@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SolarGrid Monitor Demo</title>
+  <style>
+    :root { --bg:#0d1824; --panel:#111f2d; --accent:#fbbf24; --accent-2:#f59e0b; --text:#fff4cf; --muted:#d9d1b7; --line: rgba(255,255,255,.08); }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0b1220, #1b2430); color: var(--text); }
+    .wrap { max-width:1200px; margin:0 auto; padding:28px 18px 50px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:24px; padding:12px 18px; border-radius:18px; border:1px solid var(--line); background: rgba(255,255,255,.02); }
+    .brand { font-size:1.35rem; font-weight:700; }
+    .nav-link { color: var(--text); text-decoration:none; border:1px solid rgba(251,191,36,.4); padding:8px 12px; border-radius:999px; background: rgba(251,191,36,.08); }
+    .tag { padding:8px 12px; border-radius:999px; background: rgba(251,191,36,.1); border:1px solid rgba(251,191,36,.35); color: var(--accent); }
+    .grid { display:grid; grid-template-columns:1.1fr 0.9fr; gap:18px; }
+    .panel { background: rgba(17,31,45,.96); border:1px solid var(--line); border-radius:22px; padding:20px; }
+    .sun { height:200px; display:flex; align-items:center; justify-content:center; background: linear-gradient(180deg, rgba(251,191,36,.12), rgba(59,130,246,.08)); border-radius:14px; font-size:4rem; }
+    .rows { display:flex; flex-direction:column; gap:10px; margin-top:18px; }
+    .row { display:flex; justify-content:space-between; background: rgba(255,255,255,.03); border-radius:10px; padding:12px; }
+    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px; }
+    .stat { background: rgba(255,255,255,.02); border:1px solid var(--line); border-radius:12px; padding:14px; }
+    .stat h4 { margin:0 0 10px; color: var(--muted); font-size:0.8rem; }
+    .stat strong { font-size:1.7rem; }
+    ul { list-style:none; padding:0; margin-top:18px; }
+    ul li { padding:10px 0; border-bottom:1px solid var(--line); color: var(--muted); }
+    .spark { display:flex; align-items:flex-end; gap:8px; height:70px; margin-top:18px; }
+    .spark span { width: 15%; display:block; background: linear-gradient(180deg, var(--accent), var(--accent-2)); border-radius: 8px 8px 0 0; }
+    @media (max-width:820px) { .grid { grid-template-columns:1fr; } .stats { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">SolarGrid Monitor</div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a class="nav-link" href="../Christine Joy D. Ilonen - Professional Portfolio v3.html">← Portfolio</a>
+        <div class="tag">Power Stable</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <div class="sun">☀️</div>
+        <div class="rows">
+          <div class="row"><span>Battery Level</span><strong id="battery-level">91%</strong></div>
+          <div class="row"><span>Panel Output</span><strong id="panel-output">4.8 kW</strong></div>
+          <div class="row"><span>Load Usage</span><strong id="load-usage">2.7 kW</strong></div>
+        </div>
+        <div class="spark">
+          <span style="height:45%;"></span>
+          <span style="height:58%;"></span>
+          <span style="height:72%;"></span>
+          <span style="height:76%;"></span>
+          <span style="height:65%;"></span>
+          <span style="height:88%;"></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>System Metrics</h3>
+        <div class="stats">
+          <div class="stat"><h4>Voltage</h4><strong id="voltage">48V</strong></div>
+          <div class="stat"><h4>Temp</h4><strong id="temp">33°C</strong></div>
+          <div class="stat"><h4>Today</h4><strong id="today-output">23 kWh</strong></div>
+        </div>
+        <ul>
+          <li>✅ Inverter operating normally</li>
+          <li>✅ Charge controller active</li>
+          <li>⚠️ Minor dust buildup on panel 2</li>
+          <li>✅ Backup power ready</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tag = document.querySelector('.tag');
+    const batteryLevel = document.querySelector('#battery-level');
+    const panelOutput = document.querySelector('#panel-output');
+    const loadUsage = document.querySelector('#load-usage');
+    const voltage = document.querySelector('#voltage');
+    const temp = document.querySelector('#temp');
+    const todayOutput = document.querySelector('#today-output');
+
+    const actions = {
+      optimize() {
+        tag.textContent = 'Optimizing';
+        batteryLevel.textContent = '96%';
+        panelOutput.textContent = '5.4 kW';
+        loadUsage.textContent = '2.4 kW';
+        voltage.textContent = '50V';
+        temp.textContent = '31°C';
+        todayOutput.textContent = '26 kWh';
+      },
+      save() {
+        tag.textContent = 'Power Saving';
+        batteryLevel.textContent = '92%';
+        panelOutput.textContent = '4.6 kW';
+        loadUsage.textContent = '2.1 kW';
+        voltage.textContent = '49V';
+        temp.textContent = '30°C';
+        todayOutput.textContent = '24 kWh';
+      },
+      reset() {
+        tag.textContent = 'Power Stable';
+        batteryLevel.textContent = '91%';
+        panelOutput.textContent = '4.8 kW';
+        loadUsage.textContent = '2.7 kW';
+        voltage.textContent = '48V';
+        temp.textContent = '33°C';
+        todayOutput.textContent = '23 kWh';
+      }
+    };
+
+    window.addEventListener('dblclick', () => actions.optimize());
+    setInterval(() => { const modes = ['optimize', 'save', 'reset']; const mode = modes[Math.floor(Math.random() * modes.length)]; actions[mode](); }, 5000);
+  </script>
+</body>
+</html>
